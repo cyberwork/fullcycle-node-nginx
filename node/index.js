@@ -11,6 +11,9 @@ const config = {
 const mysql = require('mysql')
 const connection = mysql.createConnection(config)
 
+const sqlCreatePeople = `CREATE TABLE IF NOT EXISTS people (id INT NOT NULL auto_increment,name VARCHAR(255), primary key (id));`
+connection.query(sqlCreatePeople)
+
 const sql = `INSERT INTO people(name) values('Adriano')`
 connection.query(sql)
 connection.end()
@@ -21,7 +24,7 @@ app.get('/', (req,res) => {
   const connection = mysql.createConnection(config)
   connection.query("SELECT * FROM people", function (err, result, fields, resultHtml) {
     if (err) throw err;
-    resultHtml = '<table><tr><td>id</td><td>Nome</td></tr>';
+    resultHtml = '<table><tr><td>ID</td><td>Nome</td></tr>';
     for (var i=0, len=result.length; i<len; i++){
       resultHtml += '<tr><td>'+result[i]['id']+'</td><td>'+result[i]['name']+'</td></tr>';
     }
